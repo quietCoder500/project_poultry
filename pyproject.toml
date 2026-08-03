@@ -7,4 +7,6 @@ requires-python = ">=3.14"
 dependencies = [
     "django>=6.0.7",
     "django-allauth[socialaccount]>=65.18.0",
+    "model-bakery>=1.24.0",
+    "uuid>=1.30",
 ]
