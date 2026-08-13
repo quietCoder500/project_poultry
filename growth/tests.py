@@ -3,6 +3,7 @@ from django.utils import timezone
 from model_bakery import baker
 
 from growth.models import WeightRecord, FeedRecord
+from growth import generators
 
 
 # Create your tests here.
@@ -46,3 +47,12 @@ class FeedRecordModelTests(TestCase):
             feed_consumed=200,  # oz
         )
         self.assertIsNotNone(record_one.recorded_at)
+
+
+class GeneratorRegistryTests(TestCase):
+    def test_generator_registration(self):
+        @generators.register("growth.WeightRecord")
+        def foo_statistic(*args, **kwargs):
+            return "bar"
+
+        self.assertEqual(generators.ALL_GENERATORS["growth.WeightRecord"][0](), "bar")

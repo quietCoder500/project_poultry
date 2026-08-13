@@ -6,6 +6,10 @@ from projects.models import Animal
 import uuid
 
 
+class ProgressReportSettings(models.Model):
+    pass
+
+
 # Create your models here.
 class WeightRecord(models.Model):
     record_id = models.UUIDField(unique=True, primary_key=True, default=uuid.uuid4)
