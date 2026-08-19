@@ -61,7 +61,7 @@ class AnimalModelTests(TestCase):
             project=self.test_livestock_project,
             common_name="CHK",
             breed="Cornish Cross",
-            is_market=True
+            is_market=True,
         )
         self.assertTrue(animal_two.is_market)
 
@@ -70,5 +70,5 @@ class AnimalModelTests(TestCase):
                 project=self.test_still_project,
                 common_name="CHK",
                 breed="Cornish Cross",
-                is_market=True
+                is_market=True,
             )

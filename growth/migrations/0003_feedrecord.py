@@ -6,23 +6,39 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('growth', '0002_alter_weightrecord_recorded_at'),
-        ('projects', '0003_animal_created_at_animal_updated_at'),
+        ("growth", "0002_alter_weightrecord_recorded_at"),
+        ("projects", "0003_animal_created_at_animal_updated_at"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='FeedRecord',
+            name="FeedRecord",
             fields=[
-                ('record_id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False, unique=True)),
-                ('feed_consumed', models.FloatField(verbose_name='Feed consumed in ounces')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('since_date_override', models.DateTimeField(blank=True, null=True)),
-                ('recorded_at', models.DateTimeField(null=True)),
-                ('animal', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='projects.animal')),
+                (
+                    "record_id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                (
+                    "feed_consumed",
+                    models.FloatField(verbose_name="Feed consumed in ounces"),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("since_date_override", models.DateTimeField(blank=True, null=True)),
+                ("recorded_at", models.DateTimeField(null=True)),
+                (
+                    "animal",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="projects.animal",
+                    ),
+                ),
             ],
         ),
     ]

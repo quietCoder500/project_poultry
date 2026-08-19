@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('growth', '0001_initial'),
+        ("growth", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='weightrecord',
-            name='recorded_at',
+            model_name="weightrecord",
+            name="recorded_at",
             field=models.DateTimeField(null=True),
         ),
     ]

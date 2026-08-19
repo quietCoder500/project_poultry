@@ -6,23 +6,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('projects', '0003_animal_created_at_animal_updated_at'),
+        ("projects", "0003_animal_created_at_animal_updated_at"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='WeightRecord',
+            name="WeightRecord",
             fields=[
-                ('record_id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False, unique=True)),
-                ('weight', models.FloatField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('recorded_at', models.DateTimeField()),
-                ('animal', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='projects.animal')),
+                (
+                    "record_id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                ("weight", models.FloatField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("recorded_at", models.DateTimeField()),
+                (
+                    "animal",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="projects.animal",
+                    ),
+                ),
             ],
         ),
     ]

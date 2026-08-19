@@ -5,22 +5,47 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('projects', '0001_initial'),
+        ("projects", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Animal',
+            name="Animal",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('common_name', models.CharField(blank=True, choices=[('CHK', 'Chicken'), ('TKY', 'Turkey'), ('DCK', 'Duck')], max_length=3, null=True)),
-                ('breed', models.CharField(blank=True, max_length=255, null=True)),
-                ('is_market', models.BooleanField(default=False)),
-                ('name', models.CharField(max_length=255)),
-                ('name_override', models.CharField(blank=True, null=True)),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='projects.project')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "common_name",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("CHK", "Chicken"),
+                            ("TKY", "Turkey"),
+                            ("DCK", "Duck"),
+                        ],
+                        max_length=3,
+                        null=True,
+                    ),
+                ),
+                ("breed", models.CharField(blank=True, max_length=255, null=True)),
+                ("is_market", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=255)),
+                ("name_override", models.CharField(blank=True, null=True)),
+                (
+                    "project",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.RESTRICT,
+                        to="projects.project",
+                    ),
+                ),
             ],
         ),
     ]

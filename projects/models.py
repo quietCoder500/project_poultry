@@ -31,9 +31,9 @@ class Project(models.Model):
             unique_slug = self.slug
             i = 0
             while (
-                    self.__class__.objects.filter(slug=unique_slug, user=self.user)
-                            .exclude(pk=self.pk)
-                            .exists()
+                self.__class__.objects.filter(slug=unique_slug, user=self.user)
+                .exclude(pk=self.pk)
+                .exists()
             ):
                 i += 1
                 unique_slug = f"{base_slug}_{i}"
@@ -61,7 +61,9 @@ class Animal(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Animal genetics
-    common_name = models.CharField(choices=ANIMAL_COMMON_NAME_CHOICES, max_length=3, blank=True, null=True)
+    common_name = models.CharField(
+        choices=ANIMAL_COMMON_NAME_CHOICES, max_length=3, blank=True, null=True
+    )
     breed = models.CharField(max_length=255, null=True, blank=True)
 
     is_market = models.BooleanField(default=False)
