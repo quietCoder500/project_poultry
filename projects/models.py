@@ -49,9 +49,9 @@ class Project(models.Model):
 
 class Animal(models.Model):
     ANIMAL_COMMON_NAME_CHOICES = [
-        ["CHK", "Chicken"],
-        ["TKY", "Turkey"],
-        ["DCK", "Duck"],
+        ("CHK", "Chicken"),
+        ("TKY", "Turkey"),
+        ("DCK", "Duck"),
     ]
 
     project = models.ForeignKey(Project, on_delete=models.RESTRICT)
