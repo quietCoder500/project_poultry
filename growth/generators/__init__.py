@@ -15,8 +15,6 @@ def register(model: str):
 #
 # Abstract Widget types
 #
-
-
 class TextCard(ABC):
     title = "Default Title"
 

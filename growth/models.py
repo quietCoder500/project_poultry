@@ -1,9 +1,9 @@
+import uuid
+
 from django.db import models
 from django.utils import timezone
 
 from projects.models import Animal
-
-import uuid
 
 
 class ProgressReportSettings(models.Model):
