@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.utils import timezone
 from model_bakery import baker
 
-from growth.models import WeightRecord, FeedRecord
 from growth import generators
+from growth.models import FeedRecord, WeightRecord
 
 
 # Create your tests here.
@@ -50,9 +50,22 @@ class FeedRecordModelTests(TestCase):
 
 
 class GeneratorRegistryTests(TestCase):
-    def test_generator_registration(self):
-        @generators.register("growth.WeightRecord")
-        def foo_statistic(*args, **kwargs):
-            return "bar"
+    def setUp(self):
+        self.mock_project = baker.make("projects.Project", is_livestock=True)
+        self.mock_animal = baker.make("projects.Animal", project=self.mock_project)
 
-        self.assertEqual(generators.ALL_GENERATORS["growth.WeightRecord"][0](), "bar")
+    def test_generator_registration(self):
+        generators.ALL_GENERATORS = {}
+
+        @generators.register("growth.WeightRecord")
+        class Foo(generators.TextCard):
+            title = "Foo card"
+
+            def render(self, *args, **kwargs):
+                return self.generate("bar")
+
+        self.assertIsNotNone(
+            generators.ALL_GENERATORS["growth.WeightRecord"][0]().render(
+                self.mock_project
+            )
+        )

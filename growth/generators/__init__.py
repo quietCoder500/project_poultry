@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from django.template.loader import render_to_string
 
 ALL_GENERATORS = {}
@@ -16,7 +17,10 @@ def register(model: str):
 # Abstract Widget types
 #
 class TextCard(ABC):
-    title = "Default Title"
+    @property
+    @abstractmethod
+    def title(self) -> str:
+        pass
 
     @classmethod
     def generate(cls, text):
@@ -26,16 +30,19 @@ class TextCard(ABC):
         )
 
     @abstractmethod
-    def render(self):
+    def render(self, project):
         pass
 
 
 class GraphCard(ABC):
-    title = "Default Title"
+    @property
+    @abstractmethod
+    def title(self) -> str:
+        pass
 
     def generate(self, chart, data_points):
         return render_to_string("growth/cards/graph_cart.html")
 
     @abstractmethod
-    def render(self):
+    def render(self, project):
         pass
