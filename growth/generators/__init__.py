@@ -16,11 +16,8 @@ def register(model: str):
 #
 # Abstract Widget types
 #
-class TextCard(ABC):
-    @property
-    @abstractmethod
-    def title(self) -> str:
-        pass
+class BaseTextCard(ABC):
+    title = "Base Text Card Title"
 
     @classmethod
     def generate(cls, text):
@@ -29,20 +26,19 @@ class TextCard(ABC):
             context={"title": cls.title, "text_content": text},
         )
 
+    @classmethod
     @abstractmethod
-    def render(self, project):
+    def render(cls, project):
         pass
 
 
-class GraphCard(ABC):
-    @property
-    @abstractmethod
-    def title(self) -> str:
-        pass
+class BaseGraphCard(ABC):
+    title = "Base Graph Card Title"
 
     def generate(self, chart, data_points):
         return render_to_string("growth/cards/graph_cart.html")
 
+    @classmethod
     @abstractmethod
-    def render(self, project):
+    def render(cls, project):
         pass

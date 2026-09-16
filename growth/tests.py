@@ -58,7 +58,7 @@ class GeneratorRegistryTests(TestCase):
         generators.ALL_GENERATORS = {}
 
         @generators.register("growth.WeightRecord")
-        class Foo(generators.TextCard):
+        class Foo(generators.BaseTextCard):
             title = "Foo card"
 
             def render(self, *args, **kwargs):

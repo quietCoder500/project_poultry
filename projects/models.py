@@ -44,7 +44,7 @@ class Project(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        pass
+        return self.title
 
 
 class Animal(models.Model):
@@ -68,7 +68,7 @@ class Animal(models.Model):
 
     is_market = models.BooleanField(default=False)
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True, blank=True)
     # is an override for animal display name
     name_override = models.CharField(null=True, blank=True)
 
@@ -77,10 +77,15 @@ class Animal(models.Model):
             return self.name_override
         show_type = "Market" if self.is_market else "Exhibition"
 
-        return f"{show_type} {self.common_name} - {self.breed}"
+        return f"{show_type} {self.get_common_name_display()} - {self.breed}"  # type: ignore
 
     def save(self, *args, **kwargs):
-        self.name = self.generate_name()
+        if self.name_override is None:
+            self.name = self.generate_name()
+
         if not self.project.is_livestock:
             raise ValueError(f"Project {self.project.title} is not a livestock project")
         return super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.name if self.name is not None else super().__str__()

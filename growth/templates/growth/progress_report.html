@@ -2,14 +2,16 @@
 
 {% block inside_content %}
     
-    {% for cards in models.values %}
-        <ul>
-        {% for card in cards %}
-            <li>
-                {{ card.render|safe }}
-            </li>
-        {% endfor %}
-        </ul>
+    {% for section in report_sections  %}
+        <section>
+            <ul>
+            {% for card in section.children %}
+                <li>
+                    {{ card.html | safe }}
+                </li>
+            {% endfor %}
+            </ul>
+        </section>
     {% endfor %}
         
 {% endblock %}

@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.db.models import Avg, Max, OuterRef, Subquery
 from django.utils import timezone
 
-from growth.generators import ALL_GENERATORS, GraphCard, TextCard, register
+from growth.generators import ALL_GENERATORS, BaseGraphCard, BaseTextCard, register
 from growth.models import FeedRecord, WeightRecord
 from projects.models import Animal, Project
 
@@ -11,11 +11,12 @@ from projects.models import Animal, Project
 #
 # widgets related to Weight Record Model
 @register("growth.WeightRecord")
-class AverageWeight(TextCard):
+class AverageWeight(BaseTextCard):
     title = "Average Weight of Flock"
     days_threshold = 3
 
-    def render(self, project):
+    @classmethod
+    def render(cls, project):
         """
         Generates the average weight of all the chickens. It discards weights older than a week and only uses the last weight from each bird
         """
@@ -37,21 +38,22 @@ class AverageWeight(TextCard):
         )["global_max"]
 
         if not global_max_date:
-            return self.generate("No weights")
+            return cls.generate("No weights")
 
-        threshold_date = global_max_date - timedelta(days=self.days_threshold)
+        threshold_date = global_max_date - timedelta(days=cls.days_threshold)
 
         result = animals_with_latest.filter(
             latest_weight_date__gte=threshold_date
         ).aggregate(group_average=Avg("latest_weight"))["group_average"]
 
-        return self.generate(f"{result} oz.")
+        return cls.generate(f"{result} oz.")
 
 
 @register("growth.WeightRecord")
-class AverageDailyGain(TextCard):
+class AverageDailyGain(BaseTextCard):
     title = "Average Daily Gain of Flock"
 
-    def render(self, project):
+    @classmethod
+    def render(cls, project):
 
-        return self.generate("4.65 oz/day")
+        return cls.generate("<float> oz/day")
