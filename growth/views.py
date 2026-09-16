@@ -20,6 +20,13 @@ class ReportSection:
 
 
 def progress_report_view(request, project_slug: str):
+    """
+    This is the view that generates the progress report for a given project. It uses the registered generators to create sections and cards for the report.
+
+    ## Potential optimizations:
+    1. **Caching**: If the report generation is resource-intensive, consider caching the results for a given project and user combination. This can be done using Django's caching framework.
+    2. **Prefetch common datapoints**: If multiple cards require the same data (e.g., average weight, daily gain), consider prefetching these values once and passing them to the cards instead of querying the database multiple times. This is an easy optimization if this is a hot spot.
+    """
     project = get_object_or_404(Project, user=request.user, slug=project_slug)
 
     report_sections = []
