@@ -1,0 +1,23 @@
+{
+  "name": "project_poultry",
+  "version": "0.0.1",
+  "description": "This is for running tailwind for ProjectPoultry",
+  "homepage": "https://github.com/quietCoder500/project_poultry#readme",
+  "bugs": {
+    "url": "https://github.com/quietCoder500/project_poultry/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quietCoder500/project_poultry.git"
+  },
+  "author": "quietCoder500",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npx @tailwindcss/cli -i static/css/style.css -o static/css/tailwind.css --minify --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

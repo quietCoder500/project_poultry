@@ -13,3 +13,6 @@ format:
 migrate:
     uv run manage.py makemigrations
     uv run manage.py migrate
+
+css:
+    npm run watch
