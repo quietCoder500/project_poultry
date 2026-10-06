@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+tbody tr td {
+    @apply border border-gray-600 bg-gray-500 text-white;
+}
+
+thead tr td {
+    @apply border border-gray-800 bg-gray-700 text-white text-2xl font-thin;
+}

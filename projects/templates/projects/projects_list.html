@@ -1,5 +1,28 @@
 {% extends 'projects/layout.html' %}
 {% block inside_content %}
     This is a list of projects
-    {% include 'projects/_components/edit_project_form.html' %}
+    
+    <ul class="border-2 border-blue-500 list-none">
+        {% for project in projects %}
+            <li>
+                <a href="
+                
+                {% if project.is_livestock %}
+                    {% url 'projects:animals-list' project.slug %}
+                {% else %}
+                    {% url 'admin:index' %}
+                {% endif %}
+                " class="flex flex-row justify-between border-2 border-red-500">
+                    <p>{{ project.title }}</p>
+                    <p>
+                        {% if project.is_livestock %}
+                            Livestock Project
+                        {% else %}
+                            Still Project
+                        {% endif %}
+                    </p>
+                <a/>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock inside_content %}

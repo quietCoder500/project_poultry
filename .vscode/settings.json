@@ -3,5 +3,6 @@
         "allauth",
         "makemigrations",
         "runserver"
-    ]
+    ],
+    "css.customData": [".vscode/tailwind.json"]
 }

@@ -1,0 +1,40 @@
+{% extends 'projects/layout.html' %}
+{% block inside_content %}
+    This is a list of animals under the {{ project.title }}
+    <table class="border-2 border-blue-500 w-full table-auto border-collapse">
+        <thead>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Common Name
+                </td>
+                <td>
+                    Breed
+                </td>
+                <td>
+                    Market Animal
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for animal in animals %}
+                <tr>
+                    <td>
+                        {{ animal.name }}
+                    </td>
+                    <td>
+                        {{ animal.common_name }}
+                    </td>
+                    <td>
+                        {{ animal.breed }}
+                    </td>
+                    <td>
+                        {{ animal.is_market }}
+                    </td>
+                </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock inside_content %}
