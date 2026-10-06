@@ -14,10 +14,21 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "watch": "npx @tailwindcss/cli -i static/css/style.css -o static/css/tailwind.css --minify --watch"
+    "watch": "npx @tailwindcss/cli -i static/css/style.css -o static/css/tailwind.css --minify --watch",
+    "postinstall": "copyfiles -u 4 node_modules/lucide/dist/umd/lucide.min.js static/js/"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/cli": "^4.3.0",
+    "lucide": "^1.52.0",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "daisyui": "^5.7.47",
+    "esbuild": "^0.28.2"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.2": true
   }
 }
