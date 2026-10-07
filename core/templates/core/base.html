@@ -17,7 +17,7 @@
     <div id="sidebar">
         {% block sidebar %}
         <div class="p-2 fixed top-4 w-full z-50">
-            <div class="navbar bg-transparent backdrop-blur-md mx-auto border border-base-300 shadow-md rounded-3xl max-w-7xl">
+            <div class="navbar bg-base-200/50 backdrop-blur-md mx-auto border border-base-300 shadow-md rounded-3xl max-w-7xl">
                 <div class="navbar-start">
                     <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
@@ -38,7 +38,7 @@
                 <div class="navbar-end">
                     <!-- The following code is from DaisyUI docs -->
                     <label class="swap swap-rotate">
-                        <input type="checkbox" class="theme-controller" value="forest" />
+                        <input type="checkbox" class="theme-controller" value="abyss" />
                         <i data-lucide="sun-medium" class="swap-off h-6 w-6"></i>
                         <i data-lucide="moon" class="swap-on h-5 w-5"></i>
                         </label>
@@ -57,6 +57,7 @@
     <div id="content">
         {% block content %}{% endblock %}
     </div>
+    <div class="py-96"></div>
     <script src="{% static 'dist/index.js' %}"></script>
 </body>
 </html>
