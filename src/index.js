@@ -2,7 +2,7 @@ import '../static/css/input.css'; // Your Tailwind CSS
 import { createIcons, ChevronRight, SunMedium, Moon } from 'lucide';
 
 const initializeTheme = () => {
-    const theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+    const theme = localStorage.getItem('theme') === 'forest' ? 'forest' : 'lemonade';
     document.documentElement.setAttribute('data-theme', theme);
 
     const themeController = document.querySelector('.theme-controller');
@@ -10,10 +10,10 @@ const initializeTheme = () => {
         return;
     }
 
-    themeController.checked = theme === 'dark';
+    themeController.checked = theme === 'forest';
 
     themeController.addEventListener('change', () => {
-        const selectedTheme = themeController.checked ? 'dark' : 'light';
+        const selectedTheme = themeController.checked ? 'forest' : 'lemonade';
         document.documentElement.setAttribute('data-theme', selectedTheme);
         localStorage.setItem('theme', selectedTheme);
     });

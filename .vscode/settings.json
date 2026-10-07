@@ -2,6 +2,7 @@
     "cSpell.words": [
         "allauth",
         "makemigrations",
+        "prefersdark",
         "runserver"
     ],
     "css.customData": [".vscode/tailwind.json"]
