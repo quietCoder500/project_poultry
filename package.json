@@ -12,23 +12,35 @@
   },
   "author": "quietCoder500",
   "type": "commonjs",
-  "main": "index.js",
   "scripts": {
-    "watch": "npx @tailwindcss/cli -i static/css/style.css -o static/css/tailwind.css --minify --watch",
-    "postinstall": "copyfiles -u 4 node_modules/lucide/dist/umd/lucide.min.js static/js/"
+    "watch": "parcel watch src/index.js",
+    "build": "parcel build src/index.js"
+  },
+  "targets": {
+    "default": {
+      "distDir": "static/dist"
+    }
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.3.0",
     "lucide": "^1.52.0",
-    "tailwindcss": "^4.3.3"
+    "theme-change": "^3.0.4"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.6.1",
     "copyfiles": "^2.4.1",
     "daisyui": "^5.7.47",
-    "esbuild": "^0.28.2"
+    "esbuild": "^0.28.2",
+    "parcel": "^2.16.4",
+    "postcss": "^8.5.29",
+    "tailwindcss": "^4.3.3"
   },
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "lmdb@2.8.5": true,
+    "msgpackr-extract@3.0.4": true,
+    "@swc/core@1.16.13": true
   }
 }

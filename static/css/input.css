@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@source "../../";
+
 tbody tr td {
     @apply border border-gray-600 bg-gray-500 text-white;
 }
