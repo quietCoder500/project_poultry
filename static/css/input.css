@@ -14,5 +14,5 @@ thead tr td {
 }
 
 p.header-tile {
-    @apply font-semibold text-base-content p-2;
+    @apply font-semibold text-base-content text-center;
 }

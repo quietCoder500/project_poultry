@@ -1,59 +1,75 @@
 {% extends 'projects/layout.html' %}
 {% block inside_content %}
-    <div>
-        <div class="pt-32 mb-6 pl-20 border-b-2 border-base-200">
-            <h1 class="text-8xl font-thin text-primary">Projects.</h1>
-        </div>
-        <div class="px-4 py-6">
-            <div class="flex flex-row justify-between">
-                <p class="header-tile">Project Name</p>
-                <p>Project Type</p>
-                <p>Next Page</p>
-            </div>
-            <ul class="list-none">
-                
+    <div class="pt-32 pl-6">
+        <h1 class="text-7xl sm:text-8xl font-semibold text-primary tracking-tight">Projects</h1>
+    </div>
+    <div class="rounded-t-2xl bg-base-100 py-8">
+        <div class="pt-2 bg-base-200/50 rounded-2xl mx-6 backdrop-blur-md shadow-md">
                 {% for project in projects %}
-                    <div class="collapse bg-base-200 text-base-content">
-                        <input type="checkbox" />
-                        <div class="collapse-title flex flex-row justify-between">
-                            {% if not project.is_completed %}
-                                <p class="font-thin">
-                                    {{ project.title}}
-                                </p>
-                            {% else %}
-                                <p class="font-thin line-through">
-                                    {{ project.title }}
-                                </p>
-                            {% endif %}
-                            <p>
+                    <details class="card collapse bg-transparent text-base-content border-b border-base-200 shadow-md">
+                        <summary class="card-body collapse-title flex flex-row items-center justify-between">
+                            <div class="flex w-fit items-center gap-2">
                                 {% if not project.is_completed %}
-                                    {% if project.is_livestock %}
-                                        Livestock
+                                    <p class="font-semibold">
+                                        {{ project.title}}
+                                    </p>
+                                {% else %}
+                                    <p class="font-semibold line-through text-base-content/20">
+                                        {{ project.title }}
+                                    </p>
+                                {% endif %}
+                                    {% if not project.is_completed %}
+                                        {% if project.is_livestock %}
+                                            <p class="badge badge-primary badge-sm w-fit whitespace-nowrap">
+                                            Livestock
+                                            </p>
+                                        {% else %}
+                                            <p class="badge badge-secondary w-fit whitespace-nowrap">
+                                            Still
+                                            </p>
+                                        {% endif %}   
                                     {% else %}
-                                        Still
-                                    {% endif %}   
-                                {% else %}
-                                    Completed
-                                {% endif %}
-                            </p>
-                            <p>
-                                
+                                        <p class="badge badge-neutral w-fit whitespace-nowrap">
+                                            Completed
+                                        </p>
+                                    {% endif %}
+                            </div>
+                            
+                            <div class="card-actions">
                                 {% if project.is_livestock %}
-                                    <a class="flex flex-row gap-2" href="{% url 'projects:animals-list' project.slug %}">
-                                        Animals <i data-lucide="chevron-right"></i>  
+                                    <a class="inline-flex justify-end px-2 items-center gap-2 whitespace-nowrap btn btn-outline sm:w-36 btn-sm" href="{% url 'projects:animals-list' project.slug %}">
+                                        <span class="hidden sm:flex">
+                                            Animals
+                                        </span>
+                                        <i class="shrink-0" data-lucide="chevron-right"></i>
                                     </a>
                                 {% else %}
-                                    <a href="{% url 'milestones:index' project.slug %}">
-                                        Milestones <i data-lucide="chevron-right"></i>  
+                                    <a class="inline-flex justify-end px-2 items-center gap-2 whitespace-nowrap btn btn-outline sm:w-36 btn-sm" href="{% url 'milestones:index' project.slug %}">
+                                        <span class="hidden sm:flex">
+                                            Milestones
+                                        </span>
+                                        <i class="shrink-0" data-lucide="chevron-right"></i>
                                     </a>
                                 {% endif %}
-                                    
-                            </p>
+                            </div>
+                        </summary>
+                        <div class="collapse-content">
+                            <form>
+                                <div class="flex items-center">
+                                    <hr class="grow border-t border-base-200">
+                                    <span class="px-16 text-base-content font-semibold">Edit</span>
+                                    <hr class="grow border-t border-base-200">
+                                </div>
+                                <fieldset class="fieldset">
+                                    <label for="title" class="label">
+                                        Title
+                                    </label>
+                                    <input id="title" class="input" type="text" value="{{project.title}}">
+                                </fieldset>
+                            </form>
                         </div>
-                    </div>
+                    </details>
                 {% endfor %}
-                    
-            </ul>
         </div>
     </div>
 {% endblock inside_content %}
