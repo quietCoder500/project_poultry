@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 
 
@@ -18,6 +19,9 @@ class Project(models.Model):
     # Project attributes
     is_livestock = models.BooleanField(default=False)  # can it have animals
     is_completed = models.BooleanField(default=False)
+
+    started_at = models.DateField(default=timezone.now)
+    completed_at = models.DateField(null=True, blank=True)
 
     class Meta:
         """Meta definition for Project."""
@@ -40,6 +44,9 @@ class Project(models.Model):
             self.slug = unique_slug
             if i > 0:
                 self.title += f" ({i})"
+
+        if self.is_completed and not self.completed_at:
+            self.completed_at = timezone.now()
 
         return super().save(*args, **kwargs)
 

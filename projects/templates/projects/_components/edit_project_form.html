@@ -1,5 +1,52 @@
+{% load widget_tweaks %}
 <div>
-    <form>
-        <button type="submit">Submit</button>
+    <form method="post" id="edit-form" class="pb-4 flex flex-col gap-2">
+        <div class="flex items-center">
+            <hr class="grow border-t border-base-200">
+            <span class="px-16 text-base-content font-semibold">Edit</span>
+            <hr class="grow border-t border-base-200">
+        </div>
+        {% csrf_token %}
+
+        <div class="flex gap-0.5 flex-col">
+            <label for="{{ project.edit_form.title.id_for_label }}" class="label">
+                Title
+            </label>
+            {{ project.edit_form.title|add_class:"input" }}
+        </div>
+        <div class="flex gap-0.5 flex-col">
+            <label for="{{ project.edit_form.is_livestock.id_for_label }}" class="label">
+                Livestock Project
+            </label>
+            {{ project.edit_form.is_livestock|add_class:"checkbox" }}
+        </div>
+        <div class="flex gap-0.5 flex-col">
+            <label for="{{ project.edit_form.started_at.id_for_label }}" class="label">
+                Started Date
+            </label>
+            {{ project.edit_form.started_at|add_class:"input" }}
+        </div>
+        
     </form>
+    <div class="flex flex-row justify-between">
+        <div>
+            <button type="submit" class="btn btn-primary" form="edit-form">
+                Save
+            </button>
+        </div>
+        <div class="flex flex-row gap-4">
+            <form method="post" action="">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">
+                    Complete Project
+                </button>
+            </form>
+            <form method="post" action="">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-error">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
 </div>

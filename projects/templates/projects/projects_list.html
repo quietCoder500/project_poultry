@@ -54,19 +54,7 @@
                             </div>
                         </summary>
                         <div class="collapse-content">
-                            <form>
-                                <div class="flex items-center">
-                                    <hr class="grow border-t border-base-200">
-                                    <span class="px-16 text-base-content font-semibold">Edit</span>
-                                    <hr class="grow border-t border-base-200">
-                                </div>
-                                <fieldset class="fieldset">
-                                    <label for="title" class="label">
-                                        Title
-                                    </label>
-                                    <input id="title" class="input" type="text" value="{{project.title}}">
-                                </fieldset>
-                            </form>
+                            {% include 'projects/_components/edit_project_form.html' %}
                         </div>
                     </details>
                 {% endfor %}

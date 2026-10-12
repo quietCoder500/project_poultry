@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "django_extensions",
     "django_browser_reload",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [

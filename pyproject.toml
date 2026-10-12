@@ -9,6 +9,7 @@ dependencies = [
     "django-allauth[socialaccount]>=65.18.0",
     "django-browser-reload>=1.21.0",
     "django-extensions>=4.1",
+    "django-widget-tweaks>=1.5.1",
     "model-bakery>=1.24.0",
     "ruff>=0.16.3",
     "uuid>=1.30",
