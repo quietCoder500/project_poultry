@@ -7,18 +7,17 @@
     <main class="rounded-t-2xl bg-base-100 py-8">
         <div class="pt-2 bg-base-200/50 rounded-2xl mx-6 backdrop-blur-md shadow-md">
                 {% for item in projects %}
-                    <details class="card collapse bg-transparent text-base-content border-b border-base-200 shadow-md">
-                        <summary class="card-body collapse-title flex flex-row items-center justify-between">
+                    <div class="collapse bg-transparent text-base-content border-b border-base-200 shadow-md relative">
+                        <input id="collapse-{{ item.project.slug }}" type="checkbox" class="peer hidden" />
+                        <div class="card-body collapse-title relative flex flex-row items-center justify-between">
                             <div class="flex flex-col sm:flex-row w-fit sm:items-center gap-2">
                                 <div class="flex flex-row items-center gap-2">
                                     
                                     {% if not item.project.is_completed %}
-                                        <i data-lucide="square-pen" class="h-5 w-5 shrink-0"></i>
                                         <p class="font-semibold">
                                             {{ item.project.title}}
                                         </p>
                                     {% else %}
-                                        <i data-lucide="square-pen" class="h-5 w-5 shrink-0 text-base-content/20"></i>
                                         <p class="font-semibold line-through text-base-content/20">
                                             {{ item.project.title }}
                                         </p>
@@ -44,27 +43,19 @@
                             </div>
                             
                             <div class="card-actions">
-                                {% if item.project.is_livestock %}
-                                    <a class="inline-flex justify-end px-2 items-center gap-2 whitespace-nowrap btn btn-outline sm:w-36 btn-sm" href="{% url 'projects:animals-list' item.project.slug %}">
-                                        <span class="hidden sm:flex">
-                                            Animals
-                                        </span>
-                                        <i class="shrink-0" data-lucide="chevron-right"></i>
-                                    </a>
-                                {% else %}
-                                    <a class="inline-flex justify-end px-2 items-center gap-2 whitespace-nowrap btn btn-outline sm:w-36 btn-sm" href="{% url 'milestones:index' item.project.slug %}">
-                                        <span class="hidden sm:flex">
-                                            Milestones
-                                        </span>
-                                        <i class="shrink-0" data-lucide="chevron-right"></i>
-                                    </a>
-                                {% endif %}
+                                <label for="collapse-{{ item.project.slug }}" class="btn btn-ghost cursor-pointer">
+                                    <i data-lucide="square-pen" class="h-5 w-5 shrink-0"></i>
+                                    <span class="hidden sm:flex">
+                                        Edit / Details
+                                    </span>
+                                    <i data-lucide="chevron-down" class="h-4 w-4 shrink-0 transition-transform duration-200 peer-checked:rotate-180"></i>
+                                </label>
                             </div>
-                        </summary>
-                        <div class="collapse-content">
+                        </div>
+                        <div class="collapse-content relative">
                             {% include 'projects/_components/edit_project_form.html' %}
                         </div>
-                    </details>
+                    </div>
                 {% endfor %}
         </div>
     </main>

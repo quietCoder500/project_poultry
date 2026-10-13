@@ -16,3 +16,7 @@ migrate:
 
 css:
     npm run watch
+
+build:
+    node -e "require('fs').rmSync('static/dist', { recursive: true, force: true }); require('fs').mkdirSync('static/dist', { recursive: true })"
+    npm run build
