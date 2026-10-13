@@ -19,11 +19,17 @@ class ProjectWithForms:
 
 # Create your views here.
 def projects_list(request):
-    projects = get_list_or_404(Project, user=request.user)
-    context = {
-        "projects": [ProjectWithForms.from_project(project) for project in projects]
-    }
+    context = {}
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
 
+        if form.is_valid():
+            form.save()
+
+    projects = get_list_or_404(Project, user=request.user)
+    context["projects"] = [
+        ProjectWithForms.from_project(project) for project in projects
+    ]
     return render(request, "projects/projects_list.html", context=context)
 
 
@@ -32,6 +38,17 @@ def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug, user=request.user)
 
     project.delete()
+
+    return redirect("projects:projects-list")
+
+
+@require_POST
+def project_edit(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug, user=request.user)
+
+    form = ProjectForm(request.POST)
+    if form.is_valid():
+        form.save()
 
     return redirect("projects:projects-list")
 

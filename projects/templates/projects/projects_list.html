@@ -9,15 +9,20 @@
                     <details class="card collapse bg-transparent text-base-content border-b border-base-200 shadow-md">
                         <summary class="card-body collapse-title flex flex-row items-center justify-between">
                             <div class="flex flex-col sm:flex-row w-fit sm:items-center gap-2">
-                                {% if not item.project.is_completed %}
-                                    <p class="font-semibold">
-                                        {{ item.project.title}}
-                                    </p>
-                                {% else %}
-                                    <p class="font-semibold line-through text-base-content/20">
-                                        {{ item.project.title }}
-                                    </p>
-                                {% endif %}
+                                <div class="flex flex-row items-center gap-2">
+                                    
+                                    {% if not item.project.is_completed %}
+                                        <i data-lucide="square-pen" class="h-5 w-5 shrink-0"></i>
+                                        <p class="font-semibold">
+                                            {{ item.project.title}}
+                                        </p>
+                                    {% else %}
+                                        <i data-lucide="square-pen" class="h-5 w-5 shrink-0 text-base-content/20"></i>
+                                        <p class="font-semibold line-through text-base-content/20">
+                                            {{ item.project.title }}
+                                        </p>
+                                    {% endif %}
+                                </div>
                                 <div class="flex flex-row items-center">
                                     {% if not item.project.is_completed %}
                                         {% if item.project.is_livestock %}
@@ -34,7 +39,6 @@
                                             Completed
                                         </p>
                                     {% endif %}
-                                    <i data-lucide="pencil-off" class="h-5 w-5 shrink-0"></i>
                                 </div>
                             </div>
                             
