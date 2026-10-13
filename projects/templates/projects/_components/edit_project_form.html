@@ -9,39 +9,39 @@
         {% csrf_token %}
 
         <div class="flex gap-0.5 flex-col">
-            <label for="{{ project.edit_form.title.id_for_label }}" class="label">
+            <label for="{{ item.edit_form.title.id_for_label }}" class="label">
                 Title
             </label>
-            {{ project.edit_form.title|add_class:"input" }}
+            {{ item.edit_form.title|add_class:"input" }}
         </div>
         <div class="flex gap-0.5 flex-col">
-            <label for="{{ project.edit_form.is_livestock.id_for_label }}" class="label">
+            <label for="{{ item.edit_form.is_livestock.id_for_label }}" class="label">
                 Livestock Project
             </label>
-            {{ project.edit_form.is_livestock|add_class:"checkbox" }}
+            {{ item.edit_form.is_livestock|add_class:"checkbox" }}
         </div>
         <div class="flex gap-0.5 flex-col">
-            <label for="{{ project.edit_form.started_at.id_for_label }}" class="label">
+            <label for="{{ item.edit_form.started_at.id_for_label }}" class="label">
                 Started Date
             </label>
-            {{ project.edit_form.started_at|add_class:"input" }}
+            {{ item.edit_form.started_at|add_class:"input" }}
         </div>
         
     </form>
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-col sm:flex-row sm:justify-between">
         <div>
-            <button type="submit" class="btn btn-primary" form="edit-form">
+            <button type="submit" class="btn btn-primary w-full sm:w-auto" form="edit-form">
                 Save
             </button>
         </div>
-        <div class="flex flex-row gap-4">
-            <form method="post" action="">
+        <div class="flex flex-row justify-between sm:justify-normal gap-4">
+            <form method="post" action="/projects/{{ item.project.slug }}/complete">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-secondary">
                     Complete Project
                 </button>
             </form>
-            <form method="post" action="">
+            <form method="post" action="/projects/{{ item.project.slug }}/delete">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-error">
                     Delete

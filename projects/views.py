@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
-from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from projects.forms import ProjectForm
 from projects.models import Animal, Project
@@ -24,6 +25,15 @@ def projects_list(request):
     }
 
     return render(request, "projects/projects_list.html", context=context)
+
+
+@require_POST
+def project_delete(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug, user=request.user)
+
+    project.delete()
+
+    return redirect("projects:projects-list")
 
 
 def animals_list(request, project_slug):

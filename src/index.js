@@ -1,5 +1,5 @@
 import '../static/css/input.css'; // Your Tailwind CSS
-import { createIcons, ChevronRight, SunMedium, Moon } from 'lucide';
+import { createIcons, ChevronRight, SunMedium, Moon, PencilOff } from 'lucide';
 
 const initializeTheme = () => {
     const theme = localStorage.getItem('theme') === 'abyss' ? 'abyss' : 'lemonade';
@@ -25,6 +25,7 @@ const renderIcons = () => {
             ChevronRight,
             SunMedium,
             Moon,
+            PencilOff,
         },
     });
 };
