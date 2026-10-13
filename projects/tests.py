@@ -53,7 +53,7 @@ class AnimalModelTests(TestCase):
             common_name="CHK",
             breed="Brahma",
         )
-        self.assertEqual(animal_one.name, "Exhibition CHK - Brahma")
+        self.assertEqual(animal_one.name, "Exhibition Chicken - Brahma")
         self.assertIsNone(animal_one.name_override)
         self.assertFalse(animal_one.is_market)
 
