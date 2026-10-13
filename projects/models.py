@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
@@ -55,7 +57,7 @@ class Project(models.Model):
 
 
 class Animal(models.Model):
-    ANIMAL_COMMON_NAME_CHOICES = [
+    ANIMAL_COMMON_NAME_CHOICES: ClassVar[list[tuple[str, str]]] = [
         ("CHK", "Chicken"),
         ("TKY", "Turkey"),
         ("DCK", "Duck"),
