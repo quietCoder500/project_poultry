@@ -9,4 +9,5 @@ urlpatterns = [
     path("", views.projects_list, name="projects-list"),
     path("<slug:project_slug>", views.animals_list, name="animals-list"),
     path("<slug:project_slug>/delete", views.project_delete, name="project-delete"),
+    path("<slug:project_slug>/edit", views.project_edit, name="project-edit"),
 ]

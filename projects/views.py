@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from django.contrib import messages
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
@@ -19,17 +20,10 @@ class ProjectWithForms:
 
 # Create your views here.
 def projects_list(request):
-    context = {}
-    if request.method == "POST":
-        form = ProjectForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-
     projects = get_list_or_404(Project, user=request.user)
-    context["projects"] = [
-        ProjectWithForms.from_project(project) for project in projects
-    ]
+    context = {
+        "projects": [ProjectWithForms.from_project(project) for project in projects]
+    }
     return render(request, "projects/projects_list.html", context=context)
 
 
@@ -46,9 +40,17 @@ def project_delete(request, project_slug):
 def project_edit(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug, user=request.user)
 
-    form = ProjectForm(request.POST)
+    form = ProjectForm(request.POST, instance=project)
+
     if form.is_valid():
-        form.save()
+        try:
+            form.save()
+            messages.success(
+                request,
+                f"{form.cleaned_data.get('title', 'Project')} updated successfully",
+            )
+        except ValueError:
+            messages.error(request, "Unable to save changes.")
 
     return redirect("projects:projects-list")
 

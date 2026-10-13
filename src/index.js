@@ -20,8 +20,6 @@ const initializeTheme = () => {
 };
 
 const renderIcons = () => {
-    console.log('Pencil export:', SquarePen);
-    console.log('Moon export:', Moon);
     createIcons({
         icons: {
             ChevronRight,

@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 <div>
-    <form method="post" id="edit-form" class="pb-4 flex flex-col gap-2">
+    <form action="/projects/{{ item.project.slug }}/edit" method="post" id="edit-form" class="pb-4 flex flex-col gap-2">
         <div class="flex items-center">
             <hr class="grow border-t border-base-200">
             <span class="px-16 text-base-content font-semibold">Edit</span>
