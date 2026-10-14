@@ -29,9 +29,19 @@ class AnimalWithForms:
 
 # Create your views here.
 def projects_list(request):
-    projects = get_list_or_404(Project, user=request.user)
+    project_form = ProjectForm()
+    if request.method == "POST":
+        project_form = ProjectForm(request.POST)
+        if project_form.is_valid():
+            project = project_form.save(commit=False)
+            project.user = request.user
+            project.save()
+            project_form = ProjectForm()
+
+    projects = Project.objects.filter(user=request.user)
     context = {
-        "projects": [ProjectWithForms.from_project(project) for project in projects]
+        "projects": [ProjectWithForms.from_project(project) for project in projects],
+        "project_form": project_form,
     }
     return render(request, "projects/projects_list.html", context=context)
 
