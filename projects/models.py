@@ -1,3 +1,4 @@
+import uuid
 from typing import ClassVar
 
 from django.contrib.auth import get_user_model
@@ -62,6 +63,12 @@ class Animal(models.Model):
         ("TKY", "Turkey"),
         ("DCK", "Duck"),
     ]
+
+    public_id = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False
+    )
 
     project = models.ForeignKey(Project, on_delete=models.RESTRICT)
 
