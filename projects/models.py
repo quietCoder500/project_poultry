@@ -96,8 +96,7 @@ class Animal(models.Model):
         return f"{show_type} {self.get_common_name_display()} - {self.breed}"  # type: ignore
 
     def save(self, *args, **kwargs):
-        if self.name_override is None:
-            self.name = self.generate_name()
+        self.name = self.generate_name()
 
         if not self.project.is_livestock:
             raise ValueError(f"Project {self.project.title} is not a livestock project")
