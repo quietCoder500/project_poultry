@@ -2,9 +2,17 @@
 {% block inside_content %}
 <div class="pt-32 px-6 flex flex-row justify-between items-end">
     <h1 class="text-7xl sm:text-8xl font-semibold text-primary tracking-tight">Animals</h1>
-    <button
-            class="btn btn-secondary btn-md sm:btn-lg rounded-2xl relative -bottom-3 sm:-bottom-4">Create
+    <button class="btn btn-secondary btn-md sm:btn-lg rounded-2xl relative -bottom-3 sm:-bottom-4"
+            onclick="animal_create_modal.showModal()">Create
         +</button>
+    <dialog id="animal_create_modal" class="modal">
+        <div class="modal-box">
+            {% include 'projects/_components/create_animal_form.html' %}
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
 </div>
 <main class="rounded-t-2xl bg-base-100 py-8">
     <div class="pt-2 bg-base-200/50 rounded-2xl mx-6 backdrop-blur-md shadow-md">

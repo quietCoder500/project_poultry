@@ -1,7 +1,8 @@
 {% load widget_tweaks %}
 <div>
     <form action="{% url 'projects:animal-edit' item.animal.project.slug item.animal.public_id %}"
-          method="post" id="edit-form" class="pb-4 flex flex-col gap-2">
+          method="post" id="edit-form-{{ item.animal.public_id}}"
+          class="pb-4 flex flex-col gap-2">
         <div class="flex items-center">
             <hr class="grow border-t border-base-200">
             <span class="px-16 text-base-content font-semibold">Edit</span>
@@ -43,7 +44,8 @@
     </form>
     <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
         <div>
-            <button type="submit" class="btn btn-primary w-full sm:w-auto" form="edit-form">
+            <button type="submit" class="btn btn-primary w-full sm:w-auto"
+                    form="edit-form-{{ item.animal.public_id }}">
                 Save
             </button>
         </div>
