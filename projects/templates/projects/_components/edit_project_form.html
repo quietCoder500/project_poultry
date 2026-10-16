@@ -1,6 +1,7 @@
 {% load widget_tweaks %}
 <div>
-    <form method="post" id="edit-form" class="pb-4 flex flex-col gap-2">
+    <form action="/projects/{{ item.project.slug }}/edit" method="post"
+          id="edit-form-{{ item.project.slug }}" class="pb-4 flex flex-col gap-2">
         <div class="flex items-center">
             <hr class="grow border-t border-base-200">
             <span class="px-16 text-base-content font-semibold">Edit</span>
@@ -26,11 +27,12 @@
             </label>
             {{ item.edit_form.started_at|add_class:"input" }}
         </div>
-        
+
     </form>
-    <div class="flex flex-col sm:flex-row sm:justify-between">
+    <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
         <div>
-            <button type="submit" class="btn btn-primary w-full sm:w-auto" form="edit-form">
+            <button type="submit" class="btn btn-primary w-full sm:w-auto"
+                    form="edit-form-{{ item.project.slug }}">
                 Save
             </button>
         </div>

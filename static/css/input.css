@@ -5,6 +5,8 @@
 
 @source "../../";
 
+@source inline("alert alert-error alert-warning alert-success alert-info");
+
 tbody tr td {
     @apply border border-gray-600 bg-gray-500 text-white;
 }

@@ -1,0 +1,39 @@
+{% load widget_tweaks %}
+<form action="{% url 'projects:animals-list' request.resolver_match.kwargs.project_slug %}"
+      method="post" id="create-form" class="pb-4 flex flex-col gap-2">
+    {% csrf_token %}
+
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.name_override.id_for_label }}" class="label">
+            Name
+            <span>Optional - A ID name will be auto generated</span>
+        </label>
+        {{ create_form.name_override|add_class:"input" }}
+    </div>
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.is_market.id_for_label }}" class="label">
+            Market Animal
+        </label>
+        {{ create_form.is_market|add_class:"checkbox" }}
+    </div>
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.common_name.id_for_label }}" class="label">
+            Common Name
+        </label>
+        {{ create_form.common_name|add_class:"input" }}
+    </div>
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.breed.id_for_label }}" class="label">
+            Breed
+        </label>
+        {{ create_form.breed|add_class:"input" }}
+    </div>
+    <div class="flex flex-row grow justify-between ">
+        <button type="submit" class="btn btn-primary w-full sm:w-auto">
+            Create Animal
+        </button>
+        <label for="{{ create_form.quantity.id_for_label}}" class="label">Copies:</label>
+        {{ create_form.quantity|add_class:"select" }}
+    </div>
+
+</form>
