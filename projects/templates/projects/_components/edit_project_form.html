@@ -39,7 +39,7 @@
         <div class="flex flex-row justify-between sm:justify-normal gap-4">
             <form method="post" action="/projects/{{ item.project.slug }}/complete">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-secondary">
+                <button type="submit" class="btn btn-disabled">
                     Complete Project
                 </button>
             </form>

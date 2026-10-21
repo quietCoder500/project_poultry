@@ -53,7 +53,7 @@
             <form method="post"
                   action="{% url 'projects:animal-edit' item.animal.project.slug item.animal.public_id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-secondary">
+                <button type="submit" class="btn btn-disabled">
                     Complete Project
                 </button>
             </form>

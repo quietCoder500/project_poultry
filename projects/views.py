@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from projects.forms import AnimalCreateForm, AnimalEditForm, ProjectForm
+from projects.forms import AnimalCreateForm, AnimalEditForm, ProjectCreateForm, ProjectForm
 from projects.models import Animal, Project
 
 
@@ -30,20 +30,24 @@ class AnimalWithForms:
 
 # Create your views here.
 def projects_list(request):
-    project_form = ProjectForm()
+    create_form = ProjectCreateForm()
     if request.method == "POST":
-        project_form = ProjectForm(request.POST)
+        project_form = ProjectCreateForm(request.POST)
         if project_form.is_valid():
             project = project_form.save(commit=False)
             project.user = request.user
             project.save()
             project_form = ProjectForm()
-            return redirect("projects:projects-list")
+            messages.success(request, f"Successfully added {project.title}")
+        else:
+            messages.error(request, "Could not create project")
+        
+        return redirect("projects:projects-list")
 
     projects = Project.objects.filter(user=request.user)
     context = {
         "projects": [ProjectWithForms.from_project(project) for project in projects],
-        "project_form": project_form,
+        "create_form": create_form,
     }
     return render(request, "projects/projects_list.html", context=context)
 
@@ -92,7 +96,7 @@ def animals_list(request, project_slug):
                     is_market=form.cleaned_data.get("is_market"),
                     name_override=form.cleaned_data.get("name_override"),
                 ).save()
-            messages.success(request, f"Successfully added {form.cleaned_data.get("quantity", i)} animals to {project.title}")
+            messages.success(request, f"Successfully added {form.cleaned_data.get("quantity", i)} animal(s) to {project.title}")
         else:
             messages.error(request, "Failed to add animal/animals")
         return redirect("projects:animals-list", project_slug=project_slug)

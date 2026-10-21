@@ -11,6 +11,15 @@ class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+class ProjectCreateForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ("title", "is_livestock", "started_at")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class AnimalEditForm(forms.ModelForm):
     class Meta:
         model = Animal
