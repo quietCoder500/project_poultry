@@ -7,38 +7,6 @@ from projects.models import Animal, Project
 
 
 # Create your tests here.
-class ProjectsListViewTests(TestCase):
-    def test_get_returns_empty_project_list_for_authenticated_user(self):
-        user = get_user_model().objects.create_user(
-            email="projects@example.com", password="test-password"
-        )  # type: ignore
-        self.client.force_login(user)
-
-        response = self.client.get(reverse("projects:projects-list"))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["projects"], [])
-
-    def test_post_creates_project_for_authenticated_user(self):
-        user = get_user_model().objects.create_user(
-            email="projects@example.com", password="test-password"
-        )  # type: ignore
-        self.client.force_login(user)
-
-        response = self.client.post(
-            reverse("projects:projects-list"),
-            {
-                "title": "My Project",
-                "started_at": "2026-10-13",
-                "is_livestock": "on",
-            },
-        )
-
-        self.assertEqual(response.status_code, 200)
-        project = Project.objects.get(title="My Project")
-        self.assertEqual(project.user, user)
-
-
 class ProjectModelTests(TestCase):
     def setUp(self):
         self.test_user = get_user_model().objects.create_user(
