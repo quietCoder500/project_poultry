@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request, project_slug):
-    return HttpResponse("Hello, world! This is a response.")
+    return render(request, "milestones/index.html")

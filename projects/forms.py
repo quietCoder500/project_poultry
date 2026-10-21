@@ -11,6 +11,7 @@ class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
 class ProjectCreateForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -28,8 +29,10 @@ class AnimalEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
 class AnimalCreateForm(forms.ModelForm):
     quantity = forms.IntegerField(min_value=1, required=True, initial=1)
+
     class Meta:
         model = Animal
         fields = ("name_override", "is_market", "common_name", "breed", "quantity")
