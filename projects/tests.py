@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import reverse
 from django.utils.text import slugify
 
-from projects.models import Project, Animal
+from projects.models import Animal, Project
 
 
 # Create your tests here.

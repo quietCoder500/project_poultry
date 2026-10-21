@@ -1,66 +1,80 @@
 {% extends 'projects/layout.html' %}
 {% block inside_content %}
-    <div class="pt-32 pl-6">
-        <h1 class="text-7xl sm:text-8xl font-semibold text-primary tracking-tight">Projects</h1>
-    </div>
-    <main class="rounded-t-2xl bg-base-100 py-8">
-        <div class="pt-2 bg-base-200/50 rounded-2xl mx-6 backdrop-blur-md shadow-md">
-                {% for item in projects %}
-                    <details class="card collapse bg-transparent text-base-content border-b border-base-200 shadow-md">
-                        <summary class="card-body collapse-title flex flex-row items-center justify-between">
-                            <div class="flex flex-col sm:flex-row w-fit sm:items-center gap-2">
-                                {% if not item.project.is_completed %}
-                                    <p class="font-semibold">
-                                        {{ item.project.title}}
-                                    </p>
-                                {% else %}
-                                    <p class="font-semibold line-through text-base-content/20">
-                                        {{ item.project.title }}
-                                    </p>
-                                {% endif %}
-                                <div class="flex flex-row items-center">
-                                    {% if not item.project.is_completed %}
-                                        {% if item.project.is_livestock %}
-                                            <p class="badge badge-primary badge-sm w-fit whitespace-nowrap">
-                                            Livestock
-                                            </p>
-                                        {% else %}
-                                            <p class="badge badge-secondary w-fit whitespace-nowrap">
-                                            Still
-                                            </p>
-                                        {% endif %}   
-                                    {% else %}
-                                        <p class="badge badge-neutral w-fit whitespace-nowrap">
-                                            Completed
-                                        </p>
-                                    {% endif %}
-                                    <i data-lucide="pencil-off" class="h-5 w-5 shrink-0"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="card-actions">
-                                {% if item.project.is_livestock %}
-                                    <a class="inline-flex justify-end px-2 items-center gap-2 whitespace-nowrap btn btn-outline sm:w-36 btn-sm" href="{% url 'projects:animals-list' item.project.slug %}">
-                                        <span class="hidden sm:flex">
-                                            Animals
-                                        </span>
-                                        <i class="shrink-0" data-lucide="chevron-right"></i>
-                                    </a>
-                                {% else %}
-                                    <a class="inline-flex justify-end px-2 items-center gap-2 whitespace-nowrap btn btn-outline sm:w-36 btn-sm" href="{% url 'milestones:index' item.project.slug %}">
-                                        <span class="hidden sm:flex">
-                                            Milestones
-                                        </span>
-                                        <i class="shrink-0" data-lucide="chevron-right"></i>
-                                    </a>
-                                {% endif %}
-                            </div>
-                        </summary>
-                        <div class="collapse-content">
-                            {% include 'projects/_components/edit_project_form.html' %}
-                        </div>
-                    </details>
-                {% endfor %}
+<div class="pt-32 px-6 flex flex-row justify-between items-end">
+    <h1 class="text-7xl sm:text-8xl font-semibold text-primary tracking-tight">Projects</h1>
+    <button class="btn btn-secondary btn-md sm:btn-lg rounded-2xl relative -bottom-3 sm:-bottom-4"
+            onclick="project_create_modal.showModal()">Create
+        +</button>
+    <dialog id="project_create_modal" class="modal">
+        <div class="modal-box">
+            <h2 class="text-3xl">Add a project</h2>
+            {% include 'projects/_components/create_project_form.html' %}
         </div>
-    </main>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
+</div>
+<main class="rounded-t-2xl bg-base-100 py-8">
+    <div class="pt-2 bg-base-200/50 rounded-2xl mx-6 backdrop-blur-md shadow-md">
+        {% for item in projects %}
+        <div
+             class="collapse bg-transparent text-base-content border-b border-base-200 shadow-md relative">
+            <input id="collapse-{{ item.project.slug }}" type="checkbox" class="peer hidden" />
+            <div
+                 class="card-body collapse-title relative flex flex-row items-center justify-between p-0">
+                <a href="{% if item.project.is_livestock %}{% url 'projects:animals-list' item.project.slug %}{% else %}{% url 'milestones:index' item.project.slug %}{% endif %}"
+                   class="relative flex grow self-stretch flex-row items-center gap-2 p-6">
+                    <div class="flex flex-col sm:flex-row grow sm:items-center gap-2">
+                        <div class="flex flex-row items-center gap-2">
+
+                            {% if not item.project.is_completed %}
+                            <p class="font-semibold">
+                                {{ item.project.title}}
+                            </p>
+                            {% else %}
+                            <p class="font-semibold line-through text-base-content/20">
+                                {{ item.project.title }}
+                            </p>
+                            {% endif %}
+                        </div>
+                        <div class="flex flex-row items-center">
+                            {% if not item.project.is_completed %}
+                            {% if item.project.is_livestock %}
+                            <p class="badge badge-primary badge-sm w-fit whitespace-nowrap">
+                                Livestock
+                            </p>
+                            {% else %}
+                            <p class="badge badge-secondary w-fit whitespace-nowrap">
+                                Still
+                            </p>
+                            {% endif %}
+                            {% else %}
+                            <p class="badge badge-neutral w-fit whitespace-nowrap">
+                                Completed
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                <div class="card-actions pr-6">
+                    <label for="collapse-{{ item.project.slug }}"
+                           class="btn btn-ghost cursor-pointer">
+                        <i data-lucide="square-pen" class="h-5 w-5 shrink-0"></i>
+                        <span class="hidden sm:flex">
+                            Edit / Details
+                        </span>
+                        <i data-lucide="chevron-down"
+                           class="h-4 w-4 shrink-0 transition-transform duration-200 peer-checked:rotate-180"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="collapse-content relative">
+                {% include 'projects/_components/edit_project_form.html' %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
 {% endblock inside_content %}

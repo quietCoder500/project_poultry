@@ -1,40 +1,58 @@
 {% extends 'projects/layout.html' %}
 {% block inside_content %}
-    This is a list of animals under the {{ project.title }}
-    <table class="border-2 border-blue-500 w-full table-auto border-collapse">
-        <thead>
-            <tr>
-                <td>
-                    Name
-                </td>
-                <td>
-                    Common Name
-                </td>
-                <td>
-                    Breed
-                </td>
-                <td>
-                    Market Animal
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-        {% for animal in animals %}
-                <tr>
-                    <td>
-                        {{ animal.name }}
-                    </td>
-                    <td>
-                        {{ animal.common_name }}
-                    </td>
-                    <td>
-                        {{ animal.breed }}
-                    </td>
-                    <td>
-                        {{ animal.is_market }}
-                    </td>
-                </tr>
+<div class="pt-32 px-6 flex flex-row justify-between items-end">
+    <h1 class="text-7xl sm:text-8xl font-semibold text-primary tracking-tight">Animals</h1>
+    <button class="btn btn-secondary btn-md sm:btn-lg rounded-2xl relative -bottom-3 sm:-bottom-4"
+            onclick="animal_create_modal.showModal()">Create
+        +</button>
+    <dialog id="animal_create_modal" class="modal">
+        <div class="modal-box">
+            <h2 class="text-3xl">Add a project</h2>
+            {% include 'projects/_components/create_animal_form.html' %}
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+</div>
+<main class="rounded-t-2xl bg-base-100 py-8">
+    <div class="pt-2 bg-base-200/50 rounded-2xl mx-6 backdrop-blur-md shadow-md">
+        {% for item in animals %}
+        <div
+             class="collapse bg-transparent text-base-content border-b border-base-200 shadow-md relative">
+            <input id="collapse-{{ item.animal.public_id }}" type="checkbox"
+                   class="peer hidden" />
+            <div
+                 class="card-body collapse-title relative flex flex-row items-center justify-between p-0">
+                <a href=""
+                   class="relative flex grow self-stretch flex-row items-center gap-2 p-6">
+                    <div class="flex flex-col sm:flex-row grow sm:items-center gap-2">
+                        <div class="flex flex-row items-center gap-2">
+                            <p class="font-semibold">
+                                {{ item.animal.name}}
+                            </p>
+                        </div>
+                        <div class="flex flex-row items-center">
+                        </div>
+                    </div>
+                </a>
+                <div class="card-actions pr-6">
+                    <label for="collapse-{{ item.animal.public_id }}"
+                           class="btn btn-ghost cursor-pointer">
+                        <i data-lucide="square-pen" class="h-5 w-5 shrink-0"></i>
+                        <span class="hidden sm:flex">
+                            Edit / Details
+                        </span>
+                        <i data-lucide="chevron-down"
+                           class="h-4 w-4 shrink-0 transition-transform duration-200 peer-checked:rotate-180"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="collapse-content relative">
+                {% include 'projects/_components/edit_animal_form.html' %}
+            </div>
+        </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
+</main>
 {% endblock inside_content %}

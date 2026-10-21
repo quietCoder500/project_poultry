@@ -1,3 +1,6 @@
+import uuid
+from typing import ClassVar
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
@@ -55,11 +58,17 @@ class Project(models.Model):
 
 
 class Animal(models.Model):
-    ANIMAL_COMMON_NAME_CHOICES = [
+    ANIMAL_COMMON_NAME_CHOICES: ClassVar[list[tuple[str, str]]] = [
         ("CHK", "Chicken"),
         ("TKY", "Turkey"),
         ("DCK", "Duck"),
     ]
+
+    public_id = models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        editable=False
+    )
 
     project = models.ForeignKey(Project, on_delete=models.RESTRICT)
 
@@ -87,8 +96,7 @@ class Animal(models.Model):
         return f"{show_type} {self.get_common_name_display()} - {self.breed}"  # type: ignore
 
     def save(self, *args, **kwargs):
-        if self.name_override is None:
-            self.name = self.generate_name()
+        self.name = self.generate_name()
 
         if not self.project.is_livestock:
             raise ValueError(f"Project {self.project.title} is not a livestock project")
