@@ -1,0 +1,30 @@
+{% load widget_tweaks %}
+<form action="{% url 'projects:projects-list' %}" method="post" id="create-form"
+      class="pb-4 flex flex-col gap-2">
+    {% csrf_token %}
+
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.title.id_for_label }}" class="label">
+            Title
+        </label>
+        {{ create_form.title|add_class:"input" }}
+    </div>
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.is_livestock.id_for_label }}" class="label">
+            Livestock Project
+        </label>
+        {{ create_form.is_livestock|add_class:"checkbox" }}
+    </div>
+    <div class="flex gap-0.5 flex-col">
+        <label for="{{ create_form.started_at.id_for_label }}" class="label">
+            Project Start Date
+        </label>
+        {{ create_form.started_at|add_class:"input" }}
+    </div>
+    <div class="flex flex-row grow justify-between ">
+        <button type="submit" class="btn btn-primary w-full sm:w-auto">
+            Create Project
+        </button>
+    </div>
+
+</form>
