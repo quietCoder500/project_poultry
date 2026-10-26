@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "allauth",
+        "cally",
+        "forloop",
         "makemigrations",
         "prefersdark",
         "runserver"

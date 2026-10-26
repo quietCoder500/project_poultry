@@ -4,8 +4,24 @@
     <h1 class="text-7xl sm:text-8xl font-semibold text-primary tracking-tight">Milestones</h1>
 </div>
 <main class="rounded-t-2xl bg-base-100 py-8 px-8 md:px-24">
+    <p class="mb-8 text-lg text-base-content/70">{{ project.title }}</p>
+    {% if milestones %}
     <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+        {% for milestone in milestones %}
         <li>
+            {% if not forloop.first %}
+            <hr />{% endif %}
+            {% cycle 'timeline-start mb-10 md:text-end' 'timeline-end mb-10' as timeline_position silent %}
+            <div class="{{ timeline_position }}">
+		    <div class="flex flex-col gap-1">
+		    <time class="font-mono italic">{{ milestone.occurred_at|date:"F j, Y" }}</time>
+		    <span class="font-mono italic">{{ milestone.days_since }} since project start</span>
+		    </div>
+                <div class="text-lg font-black">{{ milestone.title }}</div>
+                {% if milestone.description %}
+                <p class="mt-2">{{ milestone.description }}</p>
+                {% endif %}
+            </div>
             <div class="timeline-middle">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                      class="h-5 w-5">
@@ -14,13 +30,19 @@
                           clip-rule="evenodd" />
                 </svg>
             </div>
-            <div class="timeline-start mb-10 md:text-end">
-                <time class="font-mono italic">March 12, 2026</time>
-                <div class="text-lg font-black">Project Start</div>
-            </div>
-            <hr />
+            {% if not forloop.last %}
+            <hr />{% endif %}
         </li>
-
+        {% endfor %}
     </ul>
+    {% else %}
+    <p class="py-12 text-center text-base-content/70">No milestones have been added to this
+        project yet.</p>
+    {% endif %}
+    <div class="flex flex-row justify-around">
+        <calendar-range months="1">
+            <calendar-month></calendar-month>
+        </calendar-range>
+    </div>
 </main>
 {% endblock inside_content %}

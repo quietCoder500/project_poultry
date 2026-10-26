@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import MilestoneEvent
+
+
+@admin.register(MilestoneEvent)
+class MilestoneEventAdmin(admin.ModelAdmin):
+    list_display = ("title", "project", "occurred_at")
+    list_filter = ("occurred_at",)
+    search_fields = ("title", "description", "project__title")
