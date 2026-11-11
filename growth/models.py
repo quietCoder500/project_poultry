@@ -33,6 +33,14 @@ class MetricDefinition(models.Model):
 
     description = models.TextField(blank=True)
 
+    def __str__(self) -> str:
+        unit = (
+            self.unit_of_measurement
+            if self.unit_of_measurement is not None and self.unit_of_measurement != ""
+            else "No units"
+        )
+        return f"{self.name} - {self.get_data_type_display()} - {unit}"  # type: ignore
+
 
 class DataPoint(models.Model):
     project = models.ForeignKey(
