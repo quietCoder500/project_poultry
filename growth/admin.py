@@ -1,7 +1,19 @@
 from django.contrib import admin
 
-from growth.models import WeightRecord, FeedRecord
+from growth.models import DashboardCard, DataPoint, MetricDefinition
+
 
 # Register your models here.
-admin.site.register(WeightRecord)
-admin.site.register(FeedRecord)
+@admin.register(DataPoint)
+class DataPointAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(DashboardCard)
+class DashboardCardAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(MetricDefinition)
+class MetricDefinitionAdmin(admin.ModelAdmin):
+    pass

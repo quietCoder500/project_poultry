@@ -1,52 +1,99 @@
-import uuid
+from decimal import Decimal
 
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
-from projects.models import Animal
+from projects.models import Animal, Project
 
 
-class ProgressReportSettings(models.Model):
-    pass
+class MetricDefinition(models.Model):
+    class DataType(models.TextChoices):
+        FLOAT = "float", "Numeric (Decimal)"
+        INT = "int", "Numeric (Integer)"
+        TEXT = "text", "Text / Notes"
+        CHOICE = "choice", "Categorical Choice"
+
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    unit_of_measurement = models.CharField(max_length=20, blank=True)
+    data_type = models.CharField(
+        max_length=10, choices=DataType.choices, default=DataType.FLOAT
+    )
+
+    livestock_only = models.BooleanField(default=True)
+    is_global = models.BooleanField(default=False)
+    created_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        help_text="Null if global, user-created if specific to a member or club",
+    )
+
+    description = models.TextField(blank=True)
 
 
-# Create your models here.
-class WeightRecord(models.Model):
-    record_id = models.UUIDField(unique=True, primary_key=True, default=uuid.uuid4)
-    animal = models.ForeignKey(Animal, on_delete=models.RESTRICT)
-    weight = models.FloatField()
+class DataPoint(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="datapoints"
+    )
+    animal = models.ForeignKey(
+        Animal,
+        on_delete=models.CASCADE,
+        related_name="datapoints",
+        null=True,
+        blank=True,
+    )
+    metric = models.ForeignKey(
+        MetricDefinition, on_delete=models.CASCADE, related_name="datapoints"
+    )
 
-    # internal use only
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    numeric_value = models.DecimalField(
+        max_digits=10,
+        decimal_places=3,
+        null=True,
+        blank=True,
+    )
+    text_value = models.TextField(null=True, blank=True)
 
-    recorded_at = models.DateTimeField(null=True)
+    timestamp = models.DateTimeField(default=timezone.now)
+    notes = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Optional context (e.g. 'Weighed before morning feeding')",
+    )
 
-    def save(self, *args, **kwargs) -> None:
-        if self.recorded_at is None:
-            self.recorded_at = (
-                self.created_at if self.created_at is not None else timezone.now()
-            )
-        return super().save(*args, **kwargs)
+    class Meta:
+        indexes = (
+            models.Index(
+                fields=(
+                    "project",
+                    "animal",
+                    "metric",
+                    "timestamp",
+                )
+            ),
+        )
+        ordering = ("timestamp",)
+
+    def __str__(self):
+        val = self.numeric_value if self.numeric_value is not None else self.text_value
+        return f"{self.timestamp.strftime('%b %d')} - {self.metric.name}: {val} {self.metric.unit_of_measurement}"
 
 
-class FeedRecord(models.Model):
-    record_id = models.UUIDField(unique=True, primary_key=True, default=uuid.uuid4)
-    animal = models.ForeignKey(Animal, on_delete=models.RESTRICT)
-    feed_consumed = models.FloatField(verbose_name="Feed consumed in ounces")
+class DashboardCard(models.Model):
+    class CardType(models.TextChoices):
+        LINE_CHART = "line_chart", "Line Chart"
+        STAT_BADGE = "stat_badge", "Statistic Badge (Latest value)"
+        MARKDOWN = "markdown", "Text Card"
 
-    # internal use only
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    card_type = models.CharField(
+        max_length=20, choices=CardType, default=CardType.LINE_CHART
+    )
+    title = models.CharField("Card Name", max_length=100)
+    order = models.DecimalField(max_digits=10, decimal_places=5, default=Decimal("1.0"))
 
-    # only used if this is not consumption since the last Feed Record entry
-    since_date_override = models.DateTimeField(null=True, blank=True)
-
-    recorded_at = models.DateTimeField(null=True)
-
-    def save(self, *args, **kwargs) -> None:
-        if self.recorded_at is None:
-            self.recorded_at = (
-                self.created_at if self.created_at is not None else timezone.now()
-            )
-        return super().save(*args, **kwargs)
+    class Meta:
+        ordering = ("order",)
