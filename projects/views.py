@@ -4,7 +4,12 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from projects.forms import AnimalCreateForm, AnimalEditForm, ProjectCreateForm, ProjectForm
+from projects.forms import (
+    AnimalCreateForm,
+    AnimalEditForm,
+    ProjectCreateForm,
+    ProjectForm,
+)
 from projects.models import Animal, Project
 
 
@@ -17,11 +22,11 @@ class ProjectWithForms:
     def from_project(cls, project):
         return cls(project=project, edit_form=ProjectForm(instance=project))
 
+
 @dataclass
 class AnimalWithForms:
     animal: Animal
     edit_form: AnimalEditForm
-
 
     @classmethod
     def from_animal(cls, animal):
@@ -41,7 +46,7 @@ def projects_list(request):
             messages.success(request, f"Successfully added {project.title}")
         else:
             messages.error(request, "Could not create project")
-        
+
         return redirect("projects:projects-list")
 
     projects = Project.objects.filter(user=request.user)
@@ -96,20 +101,32 @@ def animals_list(request, project_slug):
                     is_market=form.cleaned_data.get("is_market"),
                     name_override=form.cleaned_data.get("name_override"),
                 ).save()
-            messages.success(request, f"Successfully added {form.cleaned_data.get("quantity", i)} animal(s) to {project.title}")
+            messages.success(
+                request,
+                f"Successfully added {form.cleaned_data.get('quantity', i)} animal(s) to {project.title}",
+            )
         else:
             messages.error(request, "Failed to add animal/animals")
         return redirect("projects:animals-list", project_slug=project_slug)
     else:
         animals = Animal.objects.filter(project=project)
 
-        context = {"animals": [AnimalWithForms.from_animal(animal) for animal in animals], "create_form": AnimalCreateForm()}
+        context = {
+            "animals": [AnimalWithForms.from_animal(animal) for animal in animals],
+            "create_form": AnimalCreateForm(),
+        }
 
         return render(request, "projects/animals_list.html", context=context)
 
+
 @require_POST
 def animal_delete(request, project_slug, public_id):
-    animal = get_object_or_404(Animal, project__slug=project_slug, project__user=request.user, public_id=public_id)
+    animal = get_object_or_404(
+        Animal,
+        project__slug=project_slug,
+        project__user=request.user,
+        public_id=public_id,
+    )
 
     animal.delete()
 
@@ -118,7 +135,12 @@ def animal_delete(request, project_slug, public_id):
 
 @require_POST
 def animal_edit(request, project_slug, public_id):
-    animal = get_object_or_404(Animal, project__slug=project_slug, project__user=request.user, public_id=public_id)
+    animal = get_object_or_404(
+        Animal,
+        project__slug=project_slug,
+        project__user=request.user,
+        public_id=public_id,
+    )
 
     form = AnimalEditForm(request.POST, instance=animal)
 

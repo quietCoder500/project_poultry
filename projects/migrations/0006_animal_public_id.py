@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('projects', '0005_project_completed_at_project_started_at'),
+        ("projects", "0005_project_completed_at_project_started_at"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='animal',
-            name='public_id',
+            model_name="animal",
+            name="public_id",
             field=models.UUIDField(blank=True, null=True),
         ),
     ]

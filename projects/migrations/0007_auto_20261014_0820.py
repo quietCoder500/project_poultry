@@ -5,15 +5,15 @@ from django.db import migrations
 
 
 def gen_uuid(apps, schema_editor):
-    MyModel = apps.get_model('projects', 'Animal')
+    MyModel = apps.get_model("projects", "Animal")
     for row in MyModel.objects.all():
         row.public_id = uuid.uuid4()
-        row.save(update_fields=['public_id'])
+        row.save(update_fields=["public_id"])
+
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('projects', '0006_animal_public_id'),
+        ("projects", "0006_animal_public_id"),
     ]
 
     operations = [

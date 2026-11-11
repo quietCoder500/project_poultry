@@ -64,11 +64,7 @@ class Animal(models.Model):
         ("DCK", "Duck"),
     ]
 
-    public_id = models.UUIDField(
-        default=uuid.uuid4,
-        unique=True,
-        editable=False
-    )
+    public_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     project = models.ForeignKey(Project, on_delete=models.RESTRICT)
 

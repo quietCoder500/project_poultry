@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('projects', '0007_auto_20261014_0820'),
+        ("projects", "0007_auto_20261014_0820"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='animal',
-            name='public_id',
+            model_name="animal",
+            name="public_id",
             field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
         ),
     ]
