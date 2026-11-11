@@ -1,4 +1,5 @@
 import '../static/css/input.css'; // Your Tailwind CSS
+import 'cally';
 import { createIcons, ChevronRight, ChevronDown, SunMedium, Moon, SquarePen } from 'lucide';
 
 const initializeTheme = () => {
